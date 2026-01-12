@@ -41,7 +41,6 @@ class IssueItemService
             'items.*.sub_unit_qty' => 'nullable|numeric|min:0',
             'items.*.sub_unit' => 'nullable|string|max:255',
             'items.*.qty' => 'nullable|string|max:255',
-            'items.*.amount' => 'required|numeric|min:0',
         ]);
 
         if ($validator->fails()) {
@@ -79,7 +78,6 @@ class IssueItemService
                     'sub_unit_qty' => $item['sub_unit_qty'] ?? null,
                     'sub_unit' => $item['sub_unit'] ?? null,
                     'qty' => $item['qty'] ?? null,
-                    'amount' => $item['amount'],
                 ]);
             })->toArray();
 
@@ -139,7 +137,6 @@ class IssueItemService
             'items.*.sub_unit_qty' => 'nullable|numeric|min:0',
             'items.*.sub_unit' => 'nullable|string|max:255',
             'items.*.qty' => 'nullable|string|max:255',
-            'items.*.amount' => 'required_with:items|numeric|min:0',
         ]);
 
         if ($validator->fails()) {
@@ -178,7 +175,6 @@ class IssueItemService
                         'sub_unit_qty' => $item['sub_unit_qty'] ?? null,
                         'sub_unit' => $item['sub_unit'] ?? null,
                         'qty' => $item['qty'] ?? null,
-                        'amount' => $item['amount'],
                     ]);
                 })->toArray();
 

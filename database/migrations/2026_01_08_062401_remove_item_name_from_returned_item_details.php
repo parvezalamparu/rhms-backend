@@ -6,23 +6,23 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
-    public function up(): void
+    public function up()
     {
         Schema::table('returned_item_details', function (Blueprint $table) {
-            $table->uuid('uuid')->after('id')->unique()->nullable();
+
+            if (Schema::hasColumn('returned_item_details', 'item_name')) {
+                $table->dropColumn('item_name');
+            }
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    public function down()
     {
         Schema::table('returned_item_details', function (Blueprint $table) {
-            $table->dropColumn('uuid');
+
+            if (!Schema::hasColumn('returned_item_details', 'item_name')) {
+                $table->string('item_name')->nullable();
+            }
         });
     }
 };

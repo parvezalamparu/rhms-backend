@@ -20,6 +20,8 @@ return [
     'allowed_methods' => ['*'],
 
     'allowed_origins' => [
+        'http://rainbowit.org',
+        'https://rainbowit.org',
         'http://localhost:5175',
         'http://127.0.0.1:5175',
         ],

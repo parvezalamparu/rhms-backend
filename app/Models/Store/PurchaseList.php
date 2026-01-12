@@ -15,12 +15,15 @@ class PurchaseList extends Model
         'uuid',
         'invoice_no',
         'requisition_no',
+        'purchase_type',
         'purchase_no',
         'po_no',
         'vendor',
         'generated_by',
         'date',
         'payment_terms',
+        'discount_type',
+        'discount_value',
     ];
 
     protected $casts = [

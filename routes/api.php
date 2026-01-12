@@ -26,6 +26,7 @@ use App\Http\Controllers\API\Store\ReturnedItemController;
 use App\Http\Controllers\API\Store\ApprovedReturnController;
 use App\Http\Controllers\API\Store\RepairItemController;
 use App\Http\Controllers\API\Store\DiscardItemController;
+use App\Http\Controllers\Store\ItemStockController;
 use App\Models\UserManagement\Users;
 
 
@@ -62,6 +63,10 @@ Route::post('/purchase/add', [PurchaseListController::class, 'store']);
 Route::get('/purchase/view', [PurchaseListController::class, 'view']);
 Route::get('/purchase/show/{purchase_no}', [PurchaseListController::class, 'view']);
 Route::put('/purchase/update/{purchase_no}', [PurchaseListController::class, 'update']);
+Route::post('/ret/add', [ReturnedItemController::class, 'store']);
+Route::get('/ret/view', [ReturnedItemController::class, 'index']);
+Route::put('/ret/update/{returned_id}', [ReturnedItemController::class, 'update']);
+Route::get('/ret/show/{returned_id}', [ReturnedItemController::class, 'show']);
 
 
 
@@ -128,6 +133,12 @@ Route::middleware('auth:sanctum')->group(function (){
             Route::delete('/delete/{id}', [ItemsController::class, 'destroy'])->middleware('permission:delete_items');
             Route::put('/update/{id}', [ItemsController::class, 'update'])->middleware('permission:update_items');
             Route::patch('/toggle/{id}', [ItemsController::class, 'toggleStatus'])->middleware('permission:toggle_items');
+
+            // Route::get('/{itemId}/batches', [ItemStockController::class, 'getAvailableBatches']);
+            // // Get details for a specific batch
+            // Route::get('/{itemId}/batches/{batchNo}', [ItemStockController::class, 'getBatchDetails']);
+
+
         });
 
         // categories
@@ -249,6 +260,8 @@ Route::middleware('auth:sanctum')->group(function (){
             Route::get('/show/{returned_id}', [ReturnedItemController::class, 'show'])->middleware('permission:show_return_item');
             Route::put('/update/{returned_id}', [ReturnedItemController::class, 'update'])->middleware('permission:update_return_item');
             Route::delete('/delete/{returned_id}', [ReturnedItemController::class, 'destroy'])->middleware('permission:delete_return_item');
+            Route::post('/move-to-repair/{returned_id}', [ReturnedItemController::class, 'moveToRepair']);
+            Route::post('/discard/{return_id}', [ReturnedItemController::class, 'discardReturnedItem']);
         });
 
         // approved return routes
@@ -266,6 +279,7 @@ Route::middleware('auth:sanctum')->group(function (){
             Route::get('/show/{return_id}', [RepairItemController::class, 'show'])->middleware('permission:show_repair');
             Route::put('/update/{return_id}', [RepairItemController::class, 'update'])->middleware('permission:update_repair');
             Route::delete('/delete/{return_id}', [RepairItemController::class, 'destroy'])->middleware('permission:delete_repair');
+            Route::post('/discard/{return_id}', [RepairItemController::class, 'discardRepairItem']);
         });
 
         // discarded routes

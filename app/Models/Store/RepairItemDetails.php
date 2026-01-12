@@ -13,15 +13,16 @@ class RepairItemDetails extends Model
     protected $fillable = [
         'uuid',
         'return_id',
-        'date',
-        'sent_by',
-        'note',
-        'item_name',
+        'item_id',
         'batch_no',
         'qty',
+        'unit_qty',
+        'unit',
+        'sub_unit_qty',
+        'sub_unit',
+        'repair_amount',
         'reason',
     ];
-
 
     protected static function boot()
     {
@@ -37,5 +38,10 @@ class RepairItemDetails extends Model
     public function repair()
     {
         return $this->belongsTo(RepairItems::class, 'return_id', 'return_id');
+    }
+
+    public function item()
+    {
+        return $this->belongsTo(Item::class, 'item_id', 'id');
     }
 }

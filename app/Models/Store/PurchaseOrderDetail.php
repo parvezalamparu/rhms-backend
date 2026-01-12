@@ -17,7 +17,7 @@ class PurchaseOrderDetail extends Model
         'generated_by',
         'date',
         'note',
-        'item_name',
+        'item_id',
         'unit_qty',
         'unit',
         'sub_unit_qty',
@@ -40,6 +40,12 @@ class PurchaseOrderDetail extends Model
     public function order()
     {
         return $this->belongsTo(PurchaseOrder::class, 'po_no', 'po_no');
+    }
+
+    // Relationship to Item
+    public function item()
+    {
+        return $this->belongsTo(Item::class, 'item_id', 'id');
     }
 }
 

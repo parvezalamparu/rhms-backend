@@ -14,7 +14,11 @@ class RepairItems extends Model
         'uuid',
         'return_id',
         'date',
+        'dept',
+        'returned_by',
         'sent_by',
+        'status',
+        'note',
     ];
 
     protected static function boot()

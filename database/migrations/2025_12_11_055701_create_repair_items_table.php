@@ -6,30 +6,24 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
-        Schema::create('repair_item_details', function (Blueprint $table) {
+        Schema::create('repair_items', function (Blueprint $table) {
             $table->id();
-            $table->string('return_id');
+            $table->uuid('uuid')->unique();
+            $table->string('return_id')->unique();
             $table->date('date');
+            $table->string('dept');
+            $table->string('returned_by');
             $table->string('sent_by');
+            $table->string('status')->default('pending');
             $table->text('note')->nullable();
-            $table->string('item_name');
-            $table->string('batch_no');
-            $table->integer('qty');
-            $table->string('reason')->nullable();
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        Schema::dropIfExists('repair_item_details');
+        Schema::dropIfExists('repair_items');
     }
 };

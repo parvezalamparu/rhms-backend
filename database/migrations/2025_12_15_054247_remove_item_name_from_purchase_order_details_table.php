@@ -11,12 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('repair_items', function (Blueprint $table) {
-            $table->id();
-            $table->string('return_id');
-            $table->date('date');
-            $table->string('sent_by');
-            $table->timestamps();
+        Schema::table('purchase_order_details', function (Blueprint $table) {
+            $table->dropColumn('item_name');
         });
     }
 
@@ -25,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('repair_items');
+        Schema::table('purchase_order_details', function (Blueprint $table) {
+            $table->string('item_name')->nullable();
+        });
     }
 };

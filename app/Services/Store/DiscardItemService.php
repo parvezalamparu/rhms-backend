@@ -19,11 +19,14 @@ class DiscardItemService
     {
         $validator = Validator::make($request->all(), [
             'return_id' => 'required|string',
-            'item_name' => 'required|string|max:255',
+            'item_id' => 'required|integer|exists:items,id',
             'batch_no' => 'nullable|string|max:255',
             'returned_department' => 'required|string|max:255',
             'return_by' => 'required|string|max:255',
             'qty' => 'required|integer|min:1',
+            'unit' => 'required|string|max:255',
+            'sub_unit_qty' => 'nullable|integer',
+            'sub_unit' => 'nullable|string',
             'discarded_by' => 'required|string|max:255',
             'discarded_reason' => 'nullable|string',
         ]);

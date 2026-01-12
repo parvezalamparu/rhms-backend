@@ -25,7 +25,6 @@ class IssueItemDetails extends Model
         'sub_unit_qty',
         'sub_unit',
         'qty',
-        'amount',
     ];
 
 

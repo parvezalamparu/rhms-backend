@@ -2,27 +2,26 @@
 
 namespace App\Models\Store;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
 class ReturnedItemDetail extends Model
 {
-    use HasFactory;
+    protected $table = 'returned_item_details';
 
     protected $fillable = [
         'uuid',
         'returned_id',
-        'date',
-        'department',
-        'returned_by',
-        'note',
-        'item_name',
+        'item_id',
         'batch_no',
         'qty',
+        'unit_qty',
+        'unit',
+        'sub_unit_qty',
+        'sub_unit',
         'reason',
+        'note',
     ];
-
 
     protected static function boot()
     {
@@ -30,7 +29,7 @@ class ReturnedItemDetail extends Model
 
         static::creating(function ($model) {
             if (empty($model->uuid)) {
-                $model->uuid = Str::uuid()->toString();
+                $model->uuid = (string) Str::uuid();
             }
         });
     }
@@ -38,5 +37,10 @@ class ReturnedItemDetail extends Model
     public function returnedItem()
     {
         return $this->belongsTo(ReturnedItem::class, 'returned_id', 'returned_id');
+    }
+
+    public function item()
+    {
+        return $this->belongsTo(Item::class, 'item_id', 'id');
     }
 }

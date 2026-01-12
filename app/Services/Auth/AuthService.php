@@ -174,7 +174,7 @@ class AuthService
     // Update a User
     public function update($request, $uuid)
 {
-    // ✅ Fix 1: Use where() with uuid column
+    // Fix 1: Use where() with uuid column
     $user = Users::where('uuid', $uuid)->first();
     
     if (!$user) {

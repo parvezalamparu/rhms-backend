@@ -25,18 +25,24 @@ class PurchaseListService
     {
         $validator = Validator::make($request->all(), [
             'invoice_no' => 'required|string|max:255',
+            'purchase_type' => 'required|string|max:50',
             'requisition_no' => 'nullable|string|max:255',
             'po_no' => 'nullable|string|max:255',
             'vendor' => 'required|string|max:255',
             'generated_by' => 'required|string|max:255',
             'date' => 'required|date',
             'payment_terms' => 'nullable|string|max:255',
+            'discount_type' => 'nullable|in:rs,percent',
+            'discount_value' => 'nullable|numeric|min:0',
 
             'items' => 'required|array|min:1',
-            'items.*.item_id' => 'required|integer|exists:items,id', // Changed to item_id
+            'items.*.item_id' => 'required|integer|exists:items,id',
             'items.*.batch_no' => 'nullable|string|max:255',
             'items.*.exp_date' => 'nullable|date',
             'items.*.qty' => 'required|integer|min:1',
+            'items.*.unit' => 'nullable|string|max:50',
+            'items.*.sub_unit_qty' => 'nullable|numeric|min:0',
+            'items.*.sub_unit' => 'nullable|string|max:50',
             'items.*.test_qty' => 'nullable|integer|min:0',
             'items.*.rate_per_unit' => 'nullable|numeric|min:0',
             'items.*.discount_rs' => 'nullable|numeric|min:0',
@@ -62,11 +68,14 @@ class PurchaseListService
             $purchase = PurchaseList::create([
                 'invoice_no' => $validated['invoice_no'],
                 'requisition_no' => $validated['requisition_no'] ?? null,
+                'purchase_type' => $validated['purchase_type'],
                 'po_no' => $validated['po_no'] ?? null,
                 'vendor' => $validated['vendor'],
                 'generated_by' => $validated['generated_by'],
                 'date' => $validated['date'],
                 'payment_terms' => $validated['payment_terms'] ?? null,
+                'discount_type' => $validated['discount_type'] ?? null,
+                'discount_value' => $validated['discount_value'] ?? 0,
             ]);
 
             foreach ($validated['items'] as $item) {
@@ -77,10 +86,13 @@ class PurchaseListService
                     'vendor' => $purchase->vendor,
                     'payment_terms' => $purchase->payment_terms,
 
-                    'item_id' => $item['item_id'], // Save only item_id
+                    'item_id' => $item['item_id'],
                     'batch_no' => $item['batch_no'] ?? null,
                     'exp_date' => $item['exp_date'] ?? null,
                     'qty' => $item['qty'],
+                    'unit' => $item['unit'] ?? null,
+                    'sub_unit_qty' => $item['sub_unit_qty'] ?? null,
+                    'sub_unit' => $item['sub_unit'] ?? null,
                     'test_qty' => $item['test_qty'] ?? 0,
                     'rate_per_unit' => $item['rate_per_unit'] ?? 0,
                     'discount_rs' => $item['discount_rs'] ?? 0,
@@ -120,17 +132,23 @@ class PurchaseListService
         $validator = Validator::make($request->all(), [
             'invoice_no' => 'required|string|max:255',
             'requisition_no' => 'nullable|string|max:255',
+            'purchase_type' => 'required|string|max:50',
             'po_no' => 'nullable|string|max:255',
             'vendor' => 'required|string|max:255',
             'generated_by' => 'required|string|max:255',
             'date' => 'required|date',
             'payment_terms' => 'nullable|string|max:255',
+            'discount_type' => 'nullable|in:rs,percent',
+            'discount_value' => 'nullable|numeric|min:0',
 
             'items' => 'required|array|min:1',
-            'items.*.item_id' => 'required|integer|exists:items,id', // Changed to item_id
+            'items.*.item_id' => 'required|integer|exists:items,id',
             'items.*.batch_no' => 'nullable|string|max:255',
             'items.*.exp_date' => 'nullable|date',
             'items.*.qty' => 'required|integer|min:1',
+            'items.*.unit' => 'nullable|string|max:50',
+            'items.*.sub_unit_qty' => 'nullable|numeric|min:0',
+            'items.*.sub_unit' => 'nullable|string|max:50',
             'items.*.test_qty' => 'nullable|integer|min:0',
             'items.*.rate_per_unit' => 'nullable|numeric|min:0',
             'items.*.discount_rs' => 'nullable|numeric|min:0',
@@ -163,11 +181,14 @@ class PurchaseListService
             $purchase->update([
                 'invoice_no' => $validated['invoice_no'],
                 'requisition_no' => $validated['requisition_no'] ?? null,
+                'purchase_type' => $validated['purchase_type'],
                 'po_no' => $validated['po_no'] ?? null,
                 'vendor' => $validated['vendor'],
                 'generated_by' => $validated['generated_by'],
                 'date' => $validated['date'],
                 'payment_terms' => $validated['payment_terms'] ?? null,
+                'discount_type' => $validated['discount_type'] ?? null,
+                'discount_value' => $validated['discount_value'] ?? 0,
             ]);
 
             // Delete previous items
@@ -182,10 +203,13 @@ class PurchaseListService
                     'vendor' => $purchase->vendor,
                     'payment_terms' => $purchase->payment_terms,
 
-                    'item_id' => $item['item_id'], // Save only item_id
+                    'item_id' => $item['item_id'],
                     'batch_no' => $item['batch_no'] ?? null,
                     'exp_date' => $item['exp_date'] ?? null,
                     'qty' => $item['qty'],
+                    'unit' => $item['unit'] ?? null,
+                    'sub_unit_qty' => $item['sub_unit_qty'] ?? null,
+                    'sub_unit' => $item['sub_unit'] ?? null,
                     'test_qty' => $item['test_qty'] ?? 0,
                     'rate_per_unit' => $item['rate_per_unit'] ?? 0,
                     'discount_rs' => $item['discount_rs'] ?? 0,

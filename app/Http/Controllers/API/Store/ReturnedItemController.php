@@ -44,4 +44,16 @@ class ReturnedItemController extends Controller
     {
         return $this->service->delete($returned_id);
     }
+
+    public function moveToRepair($returned_id)
+    {
+        $service = new ReturnedItemService();
+        return $service->moveToRepair($returned_id);
+    }
+
+    public function discardReturnedItem($id)
+    {
+        $service = new ReturnedItemService();
+        return $service->discardReturnedItem($id);
+    }
 }

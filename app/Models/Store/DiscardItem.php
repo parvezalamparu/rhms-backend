@@ -13,11 +13,14 @@ class DiscardItem extends Model
     protected $fillable = [
         'uuid',
         'return_id',
-        'item_name',
+        'item_id',
         'batch_no',
         'returned_department',
         'return_by',
         'qty',
+        'unit',
+        'sub_unit_qty',
+        'sub_unit',
         'discarded_by',
         'discarded_reason',
     ];
@@ -32,5 +35,10 @@ class DiscardItem extends Model
                 $model->uuid = Str::uuid()->toString();
             }
         });
+    }
+
+    public function item()
+    {
+        return $this->belongsTo(Item::class, 'item_id', 'id');
     }
 }

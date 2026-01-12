@@ -39,4 +39,10 @@ class RepairItemController extends Controller
     {
         return $this->service->delete($return_id);
     }
+
+    public function discardRepairItem($return_id)
+    {
+        $service = new RepairItemService();
+        return $service->discardRepairItem($return_id);
+    }
 }

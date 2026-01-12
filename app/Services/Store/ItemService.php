@@ -33,7 +33,7 @@ class ItemService
             'hsn_or_sac_no' => 'nullable|string|max:255',
             'item_unit' => 'required|string|max:50',
             'item_subunit' => 'required|string|max:50',
-            'unit_subunit_ratio' => 'required|string|max:50',
+            'unit_to_subunit' => 'required|string|max:50',
             'rack_no' => 'required|string|max:20',
             'shelf_no' => 'nullable|string|max:20',
             'image' => 'nullable|image|max:2048',
@@ -59,7 +59,6 @@ class ItemService
     }
 
     // Get item by UUID
-    // In your ItemService class
 public function getItemById($uuid)
 {
     $item = Item::where('uuid', $uuid)->first();
@@ -91,7 +90,7 @@ public function getItemById($uuid)
             'hsn_or_sac_no' => 'nullable|string|max:255',
             'item_unit' => 'required|string|max:50',
             'item_subunit' => 'required|string|max:50',
-            'unit_subunit_ratio' => 'required|string|max:50',
+            'unit_to_subunit' => 'required|string|max:50',
             'rack_no' => 'required|string|max:20',
             'shelf_no' => 'nullable|string|max:20',
             'image' => 'nullable|image|max:2048',
