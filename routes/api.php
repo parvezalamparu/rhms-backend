@@ -29,6 +29,8 @@ use App\Http\Controllers\API\Store\DiscardItemController;
 use App\Http\Controllers\Store\ItemStockController;
 use App\Models\UserManagement\Users;
 
+use App\Http\Controllers\API\Store\ReportController;
+
 
 
 // Route::middleware('web')->group(function () {
@@ -138,6 +140,8 @@ Route::middleware('auth:sanctum')->group(function (){
             // // Get details for a specific batch
             // Route::get('/{itemId}/batches/{batchNo}', [ItemStockController::class, 'getBatchDetails']);
 
+            Route::get('/{itemId}/batches', [ItemsController::class, 'getAvailableBatches']);
+            Route::get('/{itemId}/batches/{batchNo}', [ItemsController::class, 'getBatchDetails']);
 
         });
 
@@ -288,6 +292,18 @@ Route::middleware('auth:sanctum')->group(function (){
             Route::post('/add', [DiscardItemController::class, 'store'])->middleware('permission:add_discard');
             Route::get('/show/{id}', [DiscardItemController::class, 'show'])->middleware('permission:show_discard');
             Route::delete('/delete/{id}', [DiscardItemController::class, 'destroy'])->middleware('permission:delete_discard');
+        });
+
+        // report routes
+        Route::prefix('reports')->group(function () {
+            Route::get('/general-stock', [ReportController::class, 'generalStockReport']); //->middleware('auth:sanctum','permission:view_general_stock');
+            Route::get('/department-stock', [ReportController::class, 'departmentStockReport']); //->middleware('auth:sanctum','permission:view_general_stock');
+            Route::get('/requisition', [ReportController::class, 'requisitionReport']); //->middleware('auth:sanctum','permission:view_general_stock');
+            Route::get('/item-issue', [ReportController::class, 'itemIssueReport']); //->middleware('auth:sanctum','permission:view_general_stock');
+            Route::get('/item-stock', [ReportController::class, 'itemStockReport']); //->middleware('auth:sanctum','permission:view_general_stock');
+            Route::get('/purchase-order', [ReportController::class, 'purchaseOrderReport']); //->middleware('auth:sanctum','permission:view_general_stock');
+            Route::get('/purchase', [ReportController::class, 'purchaseReport']); //->middleware('auth:sanctum','permission:view_general_stock');
+            Route::get('/discard-items', [ReportController::class, 'discardItemsReport']); //->middleware('auth:sanctum','permission:view_general_stock');
         });
     });
 
